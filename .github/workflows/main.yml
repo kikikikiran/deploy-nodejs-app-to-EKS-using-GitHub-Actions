@@ -48,6 +48,6 @@ jobs:
        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
        IMAGE_TAG: latest
       run: |
-        kubectl apply -f eks/aws-auth.yaml
+        # kubectl apply -f eks/aws-auth.yaml
         kubectl apply -f deployment.yaml
         # kubectl apply -f service.yaml
