@@ -35,15 +35,14 @@ jobs:
       run: |
         docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
         docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
-
     - name: Update kube config
-      run: |
-       aws eks update-kubeconfig --name trial-eks --region us-east-1
-       echo 'KUBE_CONFIG_DATA<<EOF' >> $GITHUB_ENV
-       ec ~/.kube/config | base64) >> $GITHUB_ENV
-       echo $(cat ~/.kube/config)
-       echo 'EOF' >> $GITHUB_ENV
+      run: aws eks update-kubeconfig --name trial-eks --region us-east-1
+
+
     - name: Deploy to EKS
+      env:
+       ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}        
+       IMAGE_TAG: latest
       run: |
         kubectl apply -f eks/aws-auth.yaml
         kubectl apply -f deployment.yaml
