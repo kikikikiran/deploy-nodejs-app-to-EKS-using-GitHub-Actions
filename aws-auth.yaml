@@ -7,3 +7,5 @@ data:
   mapUsers: | 
     - userarn: arn:aws:iam::913394771653:user/IAM-user
       username: IAM-user
+      groups:
+        - system:masters
